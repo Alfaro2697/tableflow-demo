@@ -1,0 +1,5 @@
+
+.demo-strip{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#fff3e9;color:#6d3a23;padding:12px 26px;border-bottom:1px solid #f0d1bd;font-size:.86rem;flex-wrap:wrap}
+.demo-strip strong{letter-spacing:.07em;font-size:.74rem}.demo-buy{background:#dc643f;color:white;text-decoration:none;border-radius:9px;padding:9px 14px;white-space:nowrap;font-weight:700}.demo-buy:hover{color:white;background:#c04b2b}
+.sidebar-bottom p{line-height:1.5}.is-readonly{opacity:.72;cursor:not-allowed}.demo-note{font-size:.77rem;color:#7a8990}.demo-strip a:focus-visible,.nav-link:focus-visible{outline:3px solid #db744e;outline-offset:3px}
+@media(max-width:680px){.demo-strip{padding:12px 16px}.demo-buy{width:100%;text-align:center}}

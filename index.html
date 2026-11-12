@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="#111827" name="theme-color"/>
+<title>TableFlow — Interactive Demo | Restaurant Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="./css/styles.css" rel="stylesheet"/>
+<link href="./css/demo.css" rel="stylesheet"/></head>
+<body>
+
+<div class="demo-strip"><span><strong>LIVE PREVIEW</strong> — Fictional data, read-only mode. Try switching pages and filtering results.</span><a class="demo-buy" href="https://balfaroa.gumroad.com/l/pguhns" rel="noopener noreferrer" target="_blank">Get the source code · $25 ↗</a></div><div class="app-layout" id="appView">
+<aside class="sidebar">
+<div class="sidebar-brand"><span class="brand-icon sm">T<span>.</span></span><span>TableFlow</span></div>
+<span class="sidebar-label">WORKSPACE</span>
+<nav aria-label="Main navigation" class="nav flex-column gap-2">
+<button class="nav-link active" data-page="overview" type="button">◫ <span>Overview</span></button>
+<button class="nav-link" data-page="products" type="button">▦ <span>Products</span></button>
+<button class="nav-link" data-page="orders" type="button">▤ <span>Orders</span></button>
+<button class="nav-link" data-page="settings" type="button">⚙ <span>Settings</span></button>
+</nav>
+<div class="sidebar-bottom"><small class="d-block">PUBLIC DEMO</small><p class="small mt-2 mb-0">Fictional sample data · no database connection</p></div>
+</aside>
+<main class="workspace">
+<header class="topbar d-flex flex-wrap gap-2 justify-content-between align-items-center">
+<div><p class="eyebrow mb-1">TABLEFLOW / MANAGEMENT</p><h1 class="h3 fw-bold mb-0" id="pageTitle">Overview</h1></div>
+<div class="d-flex gap-2 align-items-center"><span class="live-dot"></span><span class="small text-secondary" id="restaurantLabel">Restaurant workspace</span></div>
+</header>
+<div aria-live="polite" id="alertZone" role="status"></div>
+<section class="page-section" id="overviewPage">
+<div class="welcome-banner"><div><p class="eyebrow text-white-50">YOUR BUSINESS AT A GLANCE</p><h2>Make every order count.</h2><p class="mb-0">Your daily operations, simplified.</p></div><div class="banner-art">✳</div></div>
+<div class="stats-grid mt-4">
+<article class="stat-card"><div class="stat-label">Total revenue</div><div class="stat-number" id="statRevenue">—</div><div class="stat-foot">Excludes cancelled orders</div></article>
+<article class="stat-card"><div class="stat-label">Total orders</div><div class="stat-number" id="statOrders">—</div><div class="stat-foot">Recorded orders</div></article>
+<article class="stat-card"><div class="stat-label">Active products</div><div class="stat-number" id="statProducts">—</div><div class="stat-foot">All catalog products</div></article>
+<article class="stat-card"><div class="stat-label">Low stock alerts</div><div class="stat-number" id="statStock">—</div><div class="stat-foot">5 items or fewer</div></article>
+</div>
+<div class="insights-grid mt-4">
+<div class="panel insight-panel"><div class="panel-header"><div><h3 class="h5 mb-1">Sales trend</h3><span class="text-secondary small">Last 14 calendar days · non-cancelled orders</span></div></div><div aria-label="Sales trend over the last fourteen days" class="sales-chart" id="salesChart" role="img"></div></div>
+<div class="panel insight-panel"><div class="panel-header"><div><h3 class="h5 mb-1">Top products</h3><span class="text-secondary small">Items sold · all time</span></div></div><div class="top-products" id="topProductsChart"></div></div>
+</div>
+<div class="panel mt-4"><div class="panel-header"><div><h3 class="h5 mb-1">Recent orders</h3><span class="text-secondary small">Your latest customer activity</span></div><button class="btn btn-light btn-sm" data-go="orders">View all orders →</button></div><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead><tbody id="recentOrders"></tbody></table></div></div>
+</section>
+<section class="page-section d-none" id="productsPage">
+<div class="section-intro"><div><h2 class="h5">Products &amp; inventory</h2><p class="text-secondary">Keep your catalog organized and up to date.</p></div><button class="btn btn-primary" disabled="disabled" id="newProductBtn" title="Available in the full TableFlow package">+ Add product</button></div>
+<div class="filter-bar"><input aria-label="Search products" class="form-control" id="productSearch" placeholder="Search products, SKU or category" type="search"/><select aria-label="Stock filter" class="form-select" id="stockFilter"><option value="all">All stock</option><option value="low">Low stock (≤ 5)</option><option value="active">Active only</option></select></div>
+<div class="panel"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Product</th><th>SKU</th><th>Category</th><th>Price</th><th>Stock</th><th class="text-end">Actions</th></tr></thead><tbody id="productsTable"></tbody></table></div></div>
+</section>
+<section class="page-section d-none" id="ordersPage">
+<div class="section-intro"><div><h2 class="h5">Orders</h2><p class="text-secondary">Track what is being prepared and served.</p></div><button class="btn btn-primary" disabled="disabled" id="newOrderBtn" title="Available in the full TableFlow package">+ New order</button></div>
+<div class="filter-bar"><input aria-label="Search orders" class="form-control" id="orderSearch" placeholder="Search order number or customer" type="search"/><select aria-label="Filter by status" class="form-select" id="orderStatusFilter"><option value="all">All statuses</option><option value="pending">Pending</option><option value="preparing">Preparing</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select></div>
+<div class="panel"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody id="ordersTable"></tbody></table></div></div>
+</section>
+<section class="page-section d-none" id="settingsPage">
+<div class="section-intro"><div><h2 class="h5">Workspace settings</h2><p class="text-secondary">The downloadable TableFlow starter kit provides editable settings. This public demo is read-only.</p></div></div>
+<div class="panel settings-panel"><label class="form-label" for="restaurantName">Restaurant name</label><input class="form-control mb-3" disabled="disabled" id="restaurantName" maxlength="60" placeholder="Your restaurant"/><label class="form-label" for="currencyChoice">Display currency</label><select class="form-select mb-3" disabled="disabled" id="currencyChoice"><option value="USD">USD · US dollar</option><option value="CRC">CRC · Costa Rican colón</option><option value="EUR">EUR · Euro</option></select><p class="small text-secondary">Currency changes the display symbol/format only; it does not convert stored monetary amounts. Use the same currency as your product prices.</p><button class="btn btn-primary" disabled="disabled" id="saveSettings" title="Available in the full TableFlow package" type="button">Save preferences</button><div class="small text-secondary mt-4">This demo runs entirely in your browser. It does not send data to MongoDB or store customer information.</div></div>
+</section>
+</main>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script defer="" src="./js/demo.js"></script>
+</body>
+</html>
